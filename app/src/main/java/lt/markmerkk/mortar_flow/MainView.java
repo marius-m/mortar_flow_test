@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 /**
  * @author mariusmerkevicius
  * @since 2016-11-17
@@ -15,7 +17,8 @@ import android.widget.TextView;
 
 public class MainView extends LinearLayout {
 
-    private MainPresenter presenter;
+    @Inject
+    MainPresenterDagger.Presenter presenter;
     private TextView textView;
 
     public MainView(Context context) {
@@ -42,7 +45,7 @@ public class MainView extends LinearLayout {
     //region Init
 
     private void init(Context context) {
-        presenter = (MainPresenter) context.getSystemService(MainPresenter.class.getName());
+        DaggerService.<MainPresenterDagger.Component>getDaggerComponent(context).inject(this);
 
         textView = new TextView(context);
         addView(textView);

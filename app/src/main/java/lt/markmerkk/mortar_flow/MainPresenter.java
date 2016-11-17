@@ -12,7 +12,7 @@ import mortar.ViewPresenter;
  * @author mariusmerkevicius
  * @since 2016-11-17
  */
-
+@Deprecated // Use MainPresenterDagger
 public class MainPresenter extends ViewPresenter<MainView> {
     public static final String SERIAL = "serial";
 

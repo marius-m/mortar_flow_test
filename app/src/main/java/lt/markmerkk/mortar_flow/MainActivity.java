@@ -8,6 +8,7 @@ import mortar.MortarScope;
 import mortar.bundler.BundleService;
 import mortar.bundler.BundleServiceRunner;
 
+import static lt.markmerkk.mortar_flow.DaggerService.createComponent;
 import static mortar.MortarScope.buildChild;
 import static mortar.MortarScope.findChild;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         if (activityScope == null) {
             activityScope = buildChild(getApplicationContext()) //
                     .withService(BundleServiceRunner.SERVICE_NAME, new BundleServiceRunner())
-                    .withService(MainPresenter.class.getName(), new MainPresenter())
+                    .withService(DaggerService.SERVICE_NAME, createComponent(MainPresenterDagger.Component.class))
                     .build(getScopeName());
         }
 
