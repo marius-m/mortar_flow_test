@@ -27,8 +27,7 @@ public class MainPresenterDagger {
     public static class Presenter extends ViewPresenter<MainView> {
         public static final String SERIAL = "serial";
 
-        private final DateFormat format = new SimpleDateFormat();
-        private int serial = -1;
+        private int serial = 0;
 
         @Inject Presenter() { }
 
@@ -36,17 +35,28 @@ public class MainPresenterDagger {
             if (savedInstanceState != null && serial == -1) {
                 serial = savedInstanceState.getInt(SERIAL);
             }
-            getView().show("Update #" + serial + " at " + format.format(new Date()));
+            getView().show(String.valueOf(this.serial));
         }
 
         @Override protected void onSave(Bundle outState) {
             outState.putInt(SERIAL, serial);
         }
 
+        public void incrementSerial() {
+            this.serial++;
+            getView().show(String.valueOf(this.serial));
+        }
+
         public void onSerialChange(int newSerial) {
             this.serial = newSerial;
-            getView().show("New serial: "+this.serial);
+            getView().show(String.valueOf(this.serial));
         }
+
+        public void onSerialChange(String newSerial) {
+            this.serial = Integer.parseInt(newSerial);
+            getView().show(String.valueOf(this.serial));
+        }
+
     }
 
 }

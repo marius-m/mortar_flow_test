@@ -1,9 +1,11 @@
 package lt.markmerkk.mortar_flow;
 
+import android.content.Context;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import flow.Flow;
 import mortar.MortarScope;
 import mortar.bundler.BundleService;
 import mortar.bundler.BundleServiceRunner;
@@ -22,6 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
         BundleServiceRunner.getBundleServiceRunner(this).onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void attachBaseContext(Context baseContext) {
+        baseContext = Flow.configure(baseContext, this)
+                .dispatcher(new BasicDispatcher(this))
+                .defaultKey(new MainScreen("test_title"))
+                .keyParceler(new BasicParceler())
+                .install();
+        super.attachBaseContext(baseContext);
     }
 
     @Override
@@ -54,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
 
     private String getScopeName() {
         return getClass().getName();
+    }
+
+    @Override public void onBackPressed() {
+        if (!Flow.get(this).goBack()) {
+            super.onBackPressed();
+        }
     }
 
     //endregion

@@ -5,10 +5,13 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import javax.inject.Inject;
+
+import flow.Flow;
 
 /**
  * @author mariusmerkevicius
@@ -19,7 +22,7 @@ public class MainView extends LinearLayout {
 
     @Inject
     MainPresenterDagger.Presenter presenter;
-    private TextView textView;
+    private Button textView;
 
     public MainView(Context context) {
         super(context);
@@ -46,20 +49,19 @@ public class MainView extends LinearLayout {
 
     private void init(Context context) {
         DaggerService.<MainPresenterDagger.Component>getDaggerComponent(context).inject(this);
-
-        textView = new TextView(context);
-        addView(textView);
-
-        textView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.onSerialChange(12345);
-            }
-        });
     }
 
     @Override protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        MainScreen screen = Flow.getKey(this);
+        textView = (Button) findViewById(R.id.main_button);
+        textView.setText(screen.getTitle());
+        textView.setOnClickListener(new OnClickListener() {
+            @Override public void onClick(View v) {
+                presenter.incrementSerial();
+            }
+        });
+        
         presenter.takeView(this);
     }
 
