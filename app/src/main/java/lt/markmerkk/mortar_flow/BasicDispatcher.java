@@ -58,6 +58,8 @@ public class BasicDispatcher implements Dispatcher {
         @LayoutRes final int layout;
         if (destKey instanceof MainScreen) {
             layout = R.layout.main_screen;
+        } else if(destKey instanceof NextScreen) {
+            layout = R.layout.next_screen;
         } else {
             throw new AssertionError("Unrecognized screen " + destKey);
         }

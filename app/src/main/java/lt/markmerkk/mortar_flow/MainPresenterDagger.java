@@ -45,6 +45,9 @@ public class MainPresenterDagger {
         public void incrementSerial() {
             this.serial++;
             getView().show(String.valueOf(this.serial));
+            if (serial >= 10) {
+                getView().openNext();
+            }
         }
 
         public void onSerialChange(int newSerial) {

@@ -61,7 +61,7 @@ public class MainView extends LinearLayout {
                 presenter.incrementSerial();
             }
         });
-        
+
         presenter.takeView(this);
     }
 
@@ -75,6 +75,10 @@ public class MainView extends LinearLayout {
 
     public void show(String message) {
         textView.setText(message);
+    }
+
+    public void openNext() {
+        Flow.get(this).set(new NextScreen());
     }
 
 }
